@@ -120,6 +120,8 @@ function submitForm(){
   var p = PLANS[state.plan], payEl = document.querySelector('input[name="pay"]:checked');
   var data = {
     _subject: "Alex Coder - new order (" + state.plan + ")",
+    _replyto: email,
+    _captcha: "false",
     plan: I18N.en[p.name],
     type: state.plan === "trial" ? "-" : state.type,
     price: state.plan === "trial" ? "Free trial" : p.price + " EGP",
