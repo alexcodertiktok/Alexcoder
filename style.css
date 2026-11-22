@@ -9,15 +9,16 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);lin
 main{flex:1;width:100%;max-width:1040px;margin:0 auto;padding:0 20px}
 a{color:inherit}
 
-.top{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid var(--line);background:var(--card)}
-.logo{font-weight:700;font-size:1.3rem;text-decoration:none;direction:ltr}
+.top{display:flex;justify-content:space-between;align-items:center;padding:8px 24px;background:#050d18;border-bottom:2px solid var(--blue)}
+.logo{display:block;line-height:0}
+.logo img{height:64px;width:64px;border-radius:10px;display:block}
 .caret{display:inline-block;width:.55em;height:1.1em;background:var(--blue);margin-inline-start:4px;vertical-align:-.2em;animation:blink 1.1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 nav{display:flex;gap:18px;align-items:center}
-nav a{text-decoration:none;color:var(--muted)}
-nav a:hover{color:var(--ink)}
-.lang{font:inherit;background:none;border:1px solid var(--ink);padding:4px 14px;border-radius:6px;cursor:pointer}
-.lang:hover{background:var(--ink);color:#fff}
+nav a{text-decoration:none;color:#9fb7cc}
+nav a:hover{color:#fff}
+.lang{font:inherit;background:none;color:#33d6f5;border:1px solid #33d6f5;padding:4px 14px;border-radius:6px;cursor:pointer}
+.lang:hover{background:#33d6f5;color:#050d18}
 
 .hero{padding:64px 0 36px}
 .hero h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.15;margin:0 0 12px;max-width:16em}
