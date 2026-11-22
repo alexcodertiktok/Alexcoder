@@ -1,7 +1,7 @@
 /* Alex Coder - language switch + order flow */
 var OWNER_EMAIL = "alexcodertiktok@gmail.com"; // البريد اللي بتوصله الطلبات
-var PHONE = "01212714024";
-var WA_LINK = "https://wa.me/qr/BRRH6QK6KXRFN1";
+var PHONE = "01276851497";
+var WA_LINK = "https://wa.me/message/PLT6RRUBGCBAN1";
 
 /* اللوجو متخزن هنا جوه الكود (base64) */
 /* صورة مشروع eaesgr duckins (base64) */
