@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alex Coder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="index.html"><img alt="Alex Coder" width="64" height="64"></a>
+  <nav>
+    <a href="index.html" data-i18n="nav_home">Home</a>
+    <a href="about.html" data-i18n="nav_about">About</a>
+    <button id="langBtn" class="lang" type="button">العربية</button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h1 data-i18n="hero_title">We build your site, program or app.</h1>
+    <p data-i18n="hero_sub">Pick a plan below and tell us what you need.</p>
+  </section>
+
+  <section class="plans">
+    <article class="plan">
+      <h2 data-i18n="plan1">Without amendment</h2>
+      <p data-i18n="plan1_d">Delivered as agreed, one version.</p>
+      <p class="price">100 <span data-i18n="egp">EGP</span></p>
+      <button class="start" data-plan="plain" data-i18n="start">Start</button>
+    </article>
+
+    <article class="plan">
+      <h2 data-i18n="plan2">With amendment</h2>
+      <p data-i18n="plan2_d">Includes changes after you review it.</p>
+      <p class="price">200 <span data-i18n="egp">EGP</span></p>
+      <button class="start" data-plan="amend" data-i18n="start">Start</button>
+    </article>
+
+    <article class="plan">
+      <span class="tag" data-i18n="limited">Limited offer</span>
+      <h2 data-i18n="plan3">Start trial</h2>
+      <p data-i18n="plan3_d">Try us first. No payment needed.</p>
+      <p class="price" data-i18n="free">Free</p>
+      <button class="start" data-plan="trial" data-i18n="start">Start</button>
+    </article>
+  </section>
+</main>
+
+<footer class="foot">
+  <span data-i18n="contact_us">Contact us</span> <a href="tel:01212714024" dir="ltr">01212714024</a> <span data-i18n="or_in">or in</span> <a href="https://wa.me/qr/BRRH6QK6KXRFN1" target="_blank" rel="noopener">WhatsApp</a>
+</footer>
+
+<div id="overlay" class="overlay" hidden>
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle">
+    <button id="closeBtn" class="close" type="button" aria-label="Close">×</button>
+    <div id="panelBody"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
