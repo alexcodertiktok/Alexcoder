@@ -81,3 +81,6 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 @media (prefers-reduced-motion:reduce){.project-card img{transition:none}}
 .field textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;resize:vertical;min-height:110px}
 .field textarea:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.social{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+.social a{display:inline-block;border:2px solid var(--ink);border-radius:8px;padding:9px 22px;font-weight:600;text-decoration:none;color:var(--ink);direction:ltr}
+.social a:hover{background:var(--ink);color:#fff}
