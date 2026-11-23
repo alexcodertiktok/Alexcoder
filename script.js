@@ -20,7 +20,7 @@ var I18N = {
     about_p1:"Alex Coder is a programmer building websites, programs and mobile apps for people and small businesses.",
     about_p2:"Choose a plan with or without amendments, or start with a free trial to see how we work.",
     about_cta:"See the plans",
-    t_site:"Site", t_program:"Program", t_app:"App", choose_type:"What do you need?",
+    t_site:"Site", t_program:"Program", t_app:"App", t_idea:"Quickly idea", idea_lbl:"Your idea", idea_ph:"Write your idea here...", choose_type:"What do you need?",
     cont:"Continue", pay_title:"Choose a payment method", cash:"Cash", instapay:"Instapay",
     your_data:"Your details", name:"Name", email:"Email", phone:"Phone number", submit:"Submit",
     sending:"Sending...", sent:"Done! We received your details and will contact you soon.",
@@ -38,7 +38,7 @@ var I18N = {
     about_p1:"Alex Coder مبرمج بيعمل مواقع وبرامج وتطبيقات موبايل للأفراد والشركات الصغيرة.",
     about_p2:"اختار باقة بتعديل أو بدون تعديل، أو ابدأ بتجربة مجانية تشوف بيها طريقة شغلنا.",
     about_cta:"شوف الباقات",
-    t_site:"موقع", t_program:"برنامج", t_app:"تطبيق", choose_type:"محتاج إيه؟",
+    t_site:"موقع", t_program:"برنامج", t_app:"تطبيق", t_idea:"فكرة سريعة", idea_lbl:"فكرتك", idea_ph:"اكتب فكرتك هنا...", choose_type:"محتاج إيه؟",
     cont:"متابعة", pay_title:"اختار طريقة الدفع", cash:"كاش", instapay:"إنستاباي",
     your_data:"بياناتك", name:"الاسم", email:"البريد الإلكتروني", phone:"رقم الموبايل", submit:"إرسال",
     sending:"جاري الإرسال...", sent:"تم! استلمنا بياناتك وهنتواصل معاك قريباً.",
@@ -85,16 +85,22 @@ function formHTML(withPay){
     '<button id="submitBtn" class="submit" type="button">' + t("submit") + '</button><div id="msg" class="msg" role="status"></div>';
 }
 
+function ideaFormHTML(){
+  return '<label class="field"><span>' + t("idea_lbl") + '</span><textarea id="fIdea" rows="5" placeholder="' + t("idea_ph") + '"></textarea></label>' +
+    '<label class="field"><span>' + t("phone") + '</span><input id="fPhone" type="tel" autocomplete="tel" dir="ltr"></label>' +
+    '<button id="submitBtn" class="submit" type="button">' + t("submit") + '</button><div id="msg" class="msg" role="status"></div>';
+}
+
 function render(){
   var p = PLANS[state.plan], body = document.getElementById("panelBody"), h;
   if (state.step === 1) {
     h = '<h3>' + t(p.name) + '</h3><p class="sub">' + t("choose_type") + '</p><div class="opts">' +
-      ["site","program","app"].map(function(k){
+      (state.plan === "trial" ? ["site","program","app","idea"] : ["site","program","app"]).map(function(k){
         return '<label class="opt"><input type="radio" name="type" value="' + k + '"' + (state.type === k ? " checked" : "") + '> ' + t("t_" + k) + '</label>';
       }).join("") + '</div><button id="contBtn" class="continue" type="button">' + t("cont") + '</button>';
   } else if (state.plan === "trial") {
-    h = '<h3>' + t(p.name) + '</h3>' + formHTML(false) +
-      '<p class="contact">' + t("contact_us") + ' <a href="tel:' + PHONE + '" dir="ltr">' + PHONE + '</a> ' + t("or_in") + ' <a href="' + WA_LINK + '" target="_blank" rel="noopener">WhatsApp</a></p>';
+    h = '<h3>' + t(p.name) + '</h3><p class="sub">' + t("t_" + state.type) + '</p>' +
+      (state.type === "idea" ? ideaFormHTML() : formHTML(false));
   } else {
     h = '<h3>' + t(p.name) + '</h3><p class="sub">' + t("t_" + state.type) + '</p>' +
       '<div class="big-price">' + p.price + ' ' + t("egp") + '</div>' + formHTML(true);
@@ -111,28 +117,29 @@ function render(){
 
 function openPlan(plan){
   state.plan = plan; state.type = "site";
-  state.step = plan === "trial" ? 2 : 1;
+  state.step = 1;
   render();
   document.getElementById("overlay").hidden = false;
 }
 
 function submitForm(){
-  var name = document.getElementById("fName").value.trim();
-  var email = document.getElementById("fEmail").value.trim();
-  var phone = document.getElementById("fPhone").value.trim();
+  var isIdea = state.plan === "trial" && state.type === "idea";
+  function val(id){ var el = document.getElementById(id); return el ? el.value.trim() : ""; }
+  var name = val("fName"), email = val("fEmail"), phone = val("fPhone"), idea = val("fIdea");
   var msg = document.getElementById("msg");
-  if (!name || !/^\S+@\S+\.\S+$/.test(email) || !/^[0-9+\s-]{8,15}$/.test(phone)) {
-    msg.className = "msg err"; msg.textContent = t("required"); return;
-  }
+  var phoneOk = /^[0-9+\s-]{8,15}$/.test(phone);
+  var ok = isIdea ? (idea && phoneOk) : (name && /^\S+@\S+\.\S+$/.test(email) && phoneOk);
+  if (!ok) { msg.className = "msg err"; msg.textContent = t("required"); return; }
   var p = PLANS[state.plan], payEl = document.querySelector('input[name="pay"]:checked');
   var data = {
     _subject: "Alex Coder - new order (" + state.plan + ")",
     plan: I18N.en[p.name],
-    type: state.plan === "trial" ? "-" : state.type,
+    type: I18N.en["t_" + state.type],
     price: state.plan === "trial" ? "Free trial" : p.price + " EGP",
     payment_method: payEl ? payEl.value : "-",
-    name: name, email: email, phone: phone
+    phone: phone
   };
+  if (isIdea) data.idea = idea; else { data.name = name; data.email = email; }
   msg.className = "msg"; msg.textContent = t("sending");
   fetch("https://formsubmit.co/ajax/" + OWNER_EMAIL, {
     method: "POST",
@@ -150,7 +157,6 @@ function submitForm(){
 document.addEventListener("DOMContentLoaded", function(){
   document.querySelectorAll(".logo img").forEach(function(i){ i.src = LOGO; });
   document.querySelectorAll(".project-card img").forEach(function(i){ i.src = DUCK; });
-  var fav = document.createElement("link"); fav.rel = "icon"; fav.href = LOGO; document.head.appendChild(fav);
   document.getElementById("langBtn").addEventListener("click", function(){
     lang = lang === "ar" ? "en" : "ar";
     try { localStorage.setItem("lang", lang); } catch (e) {}
