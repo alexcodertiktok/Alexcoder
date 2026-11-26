@@ -84,3 +84,5 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 .social{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
 .social a{display:inline-block;border:2px solid var(--ink);border-radius:8px;padding:9px 22px;font-weight:600;text-decoration:none;color:var(--ink);direction:ltr}
 .social a:hover{background:var(--ink);color:#fff}
+.project-row{display:flex;gap:18px;flex-wrap:wrap;margin:10px 0 28px}
+.project-row .project-card{margin:0}
